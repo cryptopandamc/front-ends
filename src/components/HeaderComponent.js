@@ -15,6 +15,9 @@ class HeaderComponent extends Component {
                     <div><Link className="nav-link" to="/header" >  <img src={logo} className="App-logo" alt="logo" /></Link></div>
                     <ul className="navbar-nav">
                         <li><Link className="nav-link" to="/simulator">Simulator</Link></li>
+                        <li><Link className="nav-link" to="/form">form test</Link></li> 
+                        <li><Link className="nav-link" to="/getBtcData">All BTC data</Link></li> 
+                        <li><Link className="nav-link" to="/test">test</Link></li> 
                     </ul>
                 </nav>
             </header>

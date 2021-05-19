@@ -22,12 +22,13 @@ export default class BtcDataList extends Component {
             count: 0,
             pageSize: 3,
             content: [],
-            searchDate: ''
+            searchDate: '',
+            dayData: [],
 
         };
         console.log("state at start " + this.state)
         this.pageSizes = [3, 6, 9];
-  
+
 
 
         this.retrieveBtcData = this.retrieveBtcData.bind(this);
@@ -41,23 +42,11 @@ export default class BtcDataList extends Component {
 
     componentDidMount() {
         this.retrieveBtcData();
-        // this.getDate();
         console.log("date at start " + this.searchDate)
     }
-    /*
-        getDate() {
-            const searchDate = Moment("2014-11-11", "M-D-YYYY");
-            this.setState = {
-                searchDate: searchDate
-            }
-            console.log(searchDate)
-        }
-    */
 
     onChangeSearchDate(e) {
         const searchDate = e.target.value;
-        console.log("value before calling setState " + e.target.value + searchDate)
-        console.log("trying to create date for search" + searchDate)
         this.setState({
             searchDate: searchDate,
         });
@@ -100,7 +89,27 @@ export default class BtcDataList extends Component {
     }
 
     searchBTCDate() {
+        const { searchDate } = this.state;
+        const params = this.getRequestParams(searchDate);
+
+        BtcService.GetDayData(params)
+            .then((response) => {
+                const {  btcDataId } = response.data;
+
+                this.setState({
+                   // dayData: response.data,
+                    btcDataId: response.data.btcDataId
+                });
+
+                console.log(response.data);
+                console.log(this.state.btcDataId)
+                this.props.history.push(`GetOneDayData/${btcDataId}`);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
         console.log("in this method");
+
     }
 
     handlePageChange(event, value) {
@@ -137,7 +146,6 @@ export default class BtcDataList extends Component {
             searchDate
         } = this.state;
 
-        //let { btcData, page, count, pageSize, searchDate } = this.state;
         console.log(this.state);
         return (
 
@@ -180,14 +188,7 @@ export default class BtcDataList extends Component {
                     <h4>Btc Trading Data List</h4>
 
                     <div className="mt-3">
-                        {"Items per Page: "}
-                        <select onChange={this.handlePageSizeChange} value={pageSize}>
-                            {this.pageSizes.map((size) => (
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-                            ))}
-                        </select>
+                      
                         <Pagination
                             className="my-3"
                             count={count}

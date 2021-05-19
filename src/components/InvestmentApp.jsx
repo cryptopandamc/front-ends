@@ -4,20 +4,21 @@ import HeaderComponent from './HeaderComponent'
 import SimulatorComponent from './SimulatorConponent'
 import FormApp from '../FormApp'
 import BtcDataList from './BtcDataList'
-import Test from './TestComponent'
+import BtcData from './BtcData';
+
 class InvestmentApp extends Component {
 
     render() {
         return (
             <div>
-                <div className="InvvestmentApp">
+                <div className="InvvestmentApp,">
                     <Router>
                         <HeaderComponent />
                         <Switch>
                             <Route path="/simulator/" component={SimulatorComponent} />
                             <Route path="/form/" component={FormApp} />
                             <Route path="/getBtcData/" component={BtcDataList} />
-                            <Route path="/test/" component={Test} />
+                            <Route path="/GetOneDayData/:btcDataId" component={BtcData} />
                         </Switch>
                     </Router>
                 </div>
